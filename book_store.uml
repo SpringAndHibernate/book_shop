@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.application_user</OriginalElement>
+  <nodes>
+    <node x="-215.34185303514374" y="535.3897763578275">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.publishing</node>
+    <node x="-208.34185303514374" y="5.95846645367412">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.author</node>
+    <node x="344.0758785942494" y="27.958466453674124">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.category</node>
+    <node x="422.1597444089457" y="630.6453674121408">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.order_book</node>
+    <node x="996.1541533546323" y="187.37060702875405">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.verification_token</node>
+    <node x="652.6150159744409" y="80.63258785942492">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.application_user</node>
+    <node x="134.2292332268372" y="342.07987220447285">26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.book</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.book" target="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.author" relationship="REFERENCES">
+      <point x="2.8421709430404007E-14" y="-193.0" />
+      <point x="228.72923322683724" y="213.0" />
+      <point x="-117.34185303514374" y="213.0" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.book" target="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.category" relationship="REFERENCES">
+      <point x="63.00000000000003" y="-193.0" />
+      <point x="416.0758785942494" y="342.07987220447285" />
+      <point x="0.0" y="39.0" />
+    </edge>
+    <edge source="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.order_book" target="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.application_user" relationship="REFERENCES">
+      <point x="-33.25" y="-61.0" />
+      <point x="455.4097444089457" y="671.0" />
+      <point x="742.1150159744409" y="671.0" />
+      <point x="0.0" y="94.0" />
+    </edge>
+    <edge source="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.order_book" target="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.book" relationship="REFERENCES">
+      <point x="33.25" y="-61.0" />
+      <point x="521.9097444089457" y="682.0" />
+      <point x="228.7292332268372" y="682.0" />
+      <point x="0.0" y="193.0" />
+    </edge>
+    <edge source="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.verification_token" target="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.application_user" relationship="REFERENCES">
+      <point x="0.0" y="-83.0" />
+      <point x="1090.1541533546324" y="621.5" />
+      <point x="742.1150159744409" y="621.5" />
+      <point x="0.0" y="94.0" />
+    </edge>
+    <edge source="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.book" target="26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.publishing" relationship="REFERENCES">
+      <point x="-62.99999999999997" y="-193.0" />
+      <point x="-117.34185303514374" y="342.07987220447285" />
+      <point x="0.0" y="105.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7097505668934241" showDependencies="false" x="502.7044728434505" y="430.99999999999994" />
+  <SelectedNodes>
+    <node>26d2b14a-d542-4124-b804-8d30c2c6cfe9.TABLE:book_store.public.application_user</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

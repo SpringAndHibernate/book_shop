@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Publishing</title>
+    <style>
+        .order{
+            margin-left: 30px;
+        }
+        table, th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        *, *:before, *:after{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+        nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 3px 10px -2px rgba(0,0,0,.1);
+            border: 1px solid rgba(0,0,0,.1);
+        }
+        nav ul{
+            list-style: none;
+            position: relative;
+            float: right;
+            margin-right: 100px;
+            display: inline-table;
+        }
+        nav ul li{
+            float: left;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        nav ul li:hover{background: rgba(0,0,0,.15);}
+        nav ul li:hover > ul{display: block;}
+        nav ul li{
+            float: left;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        nav ul li a{
+            display: block;
+            padding: 30px 20px;
+            color: #222;
+            font-size: .9em;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        nav ul ul{
+            display: none;
+            background: #fff;
+            position: absolute;
+            top: 100%;
+            box-shadow: -3px 3px 10px -2px rgba(0,0,0,.1);
+            border: 1px solid rgba(0,0,0,.1);
+        }
+        nav ul ul li{float: none; position: relative;}
+        nav ul ul li a {
+            padding: 15px 30px;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+        nav ul ul ul {
+            position: absolute;
+            left: 100%;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <nav role='navigation'>
+        <a href="/"><img src="https://clck.ru/UjCoc" width="90" height="75" alt="Book logo"></a>
+        <ul>
+            <li><a href="/book/new">Book</a></li>
+            <li><a href="/author/new">Author</a></li>
+            <li><a href="/publishing/new">Publishing</a></li>
+            <li><a href="/category/new">Category</a>
+            <li><a href="/users">Users</a>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</div>
+<br><br><br><br><br><br><br>
+<div class="order">
+
+    <div>
+        <h2>Publishings</h2><br><br>
+        <table>
+            <tr>
+                <th width="120">Name</th>
+                <th width="80">Website</th>
+                <th width="100">Phone</th>
+                <th width="80">Address</th>
+                <th width="80">Edit</th>
+                <th width="80">Remove</th>
+            </tr>
+            <div th:each="publishing : ${publishings}">
+                <tr>
+                    <td><b th:text="${publishing.getName()}" id="name"></b></td>
+                    <td>
+                        <a th:href="@{https://{website}(website=${publishing.getWebsite()})}" id="website">
+                        <p th:text="${publishing.getWebsite()}"></p>
+                        </a>
+                    </td>
+                    <td><b th:text="${publishing.getPhone()}" id="phone"></b></td>
+                    <td><b th:text="${publishing.getAddress()}" id="address"></b></td>
+                    <td><a th:href="@{/publishing/edit/{id}(id=${publishing.getId()})}"> Edit </a></td>
+                    <td><a th:href="@{/publishing/remove/{id}(id=${publishing.getId()})}"> Remove </a></td>
+                </tr>
+            </div>
+        </table>
+    </div><br><br>
+
+    <div>
+        <h2>Add new publishing</h2>
+        <br>
+    </div>
+    <div>
+        <form th:action="@{/publishing/add}" th:object="${publishing}" th:method="post">
+            <div>
+                <label>Name:&nbsp;</label>
+                <input type="text" th:field="*{name}" required/><br>
+                <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error">Name error</div>
+            </div>
+            <div>
+                <br>
+                <label>Website:&nbsp;</label>
+                <input type="text" th:field="*{website}" required/><br>
+                <div style="color: red" th:if="${#fields.hasErrors('website')}" th:errors="*{website}" class="error">Website error</div>
+            </div>
+            <div>
+                <br>
+                <label>Phone:&nbsp;</label>
+                <input type="text" th:field="*{phone}" required/><br>
+                <div style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error">Phone error</div>
+            </div>
+            <div>
+                <br>
+                <label>City:&nbsp;</label>
+                <input type="text" th:field="*{address.city}" required/><br><br>
+
+                <label>Street:&nbsp;</label>
+                <input type="text" th:field="*{address.street}" required/><br><br>
+
+                <label>Building:&nbsp;</label>
+                <input type="text" th:field="*{address.building}" required/><br><br>
+
+                <label>Postal Code:&nbsp;</label>
+                <input type="text" th:field="*{address.postalCode}" required/><br><br>
+
+            </div>
+            <div>
+                <input type="submit" value="Add">
+                <br><br>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

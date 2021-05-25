@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+    <style>
+        .order{
+            margin-left: 30px;
+        }
+        table, th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        *, *:before, *:after{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+        nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 3px 10px -2px rgba(0,0,0,.1);
+            border: 1px solid rgba(0,0,0,.1);
+        }
+        nav ul{
+            list-style: none;
+            position: relative;
+            float: right;
+            margin-right: 100px;
+            display: inline-table;
+        }
+        nav ul li{
+            float: left;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        nav ul li:hover{background: rgba(0,0,0,.15);}
+        nav ul li:hover > ul{display: block;}
+        nav ul li{
+            float: left;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        nav ul li a{
+            display: block;
+            padding: 30px 20px;
+            color: #222;
+            font-size: .9em;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        nav ul ul{
+            display: none;
+            background: #fff;
+            position: absolute;
+            top: 100%;
+            box-shadow: -3px 3px 10px -2px rgba(0,0,0,.1);
+            border: 1px solid rgba(0,0,0,.1);
+        }
+        nav ul ul li{float: none; position: relative;}
+        nav ul ul li a {
+            padding: 15px 30px;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+        nav ul ul ul {
+            position: absolute;
+            left: 100%;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <nav role='navigation'>
+        <a href="/"><img src="https://clck.ru/UjCoc" width="90" height="75" alt="Book logo"></a>
+        <ul>
+            <li><a href="/book/new">Book</a></li>
+            <li><a href="/author/new">Author</a></li>
+            <li><a href="/publishing/new">Publishing</a></li>
+            <li><a href="/category/new">Category</a>
+            <li><a href="/users">Users</a>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</div>
+<br><br><br><br><br><br><br>
+<div class="order">
+    <div>
+        <h2>Categories</h2><br><br>
+        <table>
+            <tr>
+                <th width="120">Title</th>
+                <th width="120">Author</th>
+                <th width="120">Rating</th>
+                <th width="120">Availability</th>
+                <th width="120">Price</th>
+                <th width="80">Edit</th>
+                <th width="80">Remove</th>
+            </tr>
+            <div th:each="book : ${books}">
+                <tr>
+                    <td><a th:href="@{/books/{id}(id=${book.getId()})}"  id="book">
+                        <p th:text="${book.getTitle()}">
+                        </p>
+                    </a></td>
+                    <td><b th:text="${book.getAuthor()}"></b></td>
+                    <td><b th:text="${book.getRating()}"></b></td>
+                    <td><b th:text="${book.getAvailability()}"></b></td>
+                    <td><b th:text="${book.getPrice()}"></b></td>
+                    <td><a th:href="@{/edit/{id}(id=${book.getId()})}"> Edit </a></td>
+                    <td><a th:href="@{/remove/{id}(id=${book.getId()})}"> Remove </a></td>
+                </tr>
+            </div>
+        </table>
+    </div><br><br>
+    <div>
+        <h2>Add new book</h2>
+        <br>
+    </div>
+    <div>
+        <form th:action="@{/add}" th:object="${book}" method="post" enctype="multipart/form-data">
+            <div>
+                <label>Title:&nbsp;</label>
+                <input type="text" th:field="*{title}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error">Title error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Category:</label>
+                <select id="category" name="category" required>
+                    <th:block th:each="c : ${categories}">
+                        <option th:text="${c.name}" th:value="${c.id}"></option>
+                    </th:block>
+                </select>
+                <br><br>
+            </div>
+            <div>
+                <label>Publishing:</label>
+                <select id="publishing" name="publishing" required>
+                    <th:block th:each="p : ${publishings}">
+                        <option th:text="${p.name}" th:value="${p.id}"></option>
+                    </th:block>
+                </select>
+                <br><br>
+            </div>
+            <div>
+                <label>Author:</label>
+                <select id="author" name="author" required>
+                    <th:block th:each="a : ${authors}">
+                        <option th:text="${a.name} + ' ' + ${a.surname}" th:value="${a.id}"></option>
+                    </th:block>
+                </select>
+                <br><br>
+            </div>
+            <div>
+                <label>ISBN:&nbsp;</label>
+                <input type="text" th:field="*{isbn}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="error">ISBN error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Cover:&nbsp;</label>
+                <input type="text" th:field="*{cover}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('cover')}" th:errors="*{cover}" class="error">Cover error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Age Limit:&nbsp;</label>
+                <input type="text" th:field="*{ageLimit}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('ageLimit')}" th:errors="*{ageLimit}" class="error">Age Limit error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Pages:&nbsp;</label>
+                <input type="text" th:field="*{pages}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}" class="error">Pages error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Weight:&nbsp;</label>
+                <input type="text" th:field="*{weight}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}" class="error">Weight error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Rating:&nbsp;</label>
+                <input type="number" step="1" min="1" max="5" th:field="*{rating}" required/>
+                <br><br>
+            </div>
+            <div>
+                <label>Format:&nbsp;</label>
+                <input type="text" th:field="*{format}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('format')}" th:errors="*{format}" class="error">Format error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Availability:</label>
+                <select id="availability" name="availability" required>
+                    <th:block th:each="a : ${availability}">
+                        <option th:text="${a.name()}" th:value="${a.name()}"></option>
+                    </th:block>
+                </select>
+                <br><br>
+            </div>
+            <div>
+                <label>Release date:&nbsp;</label>
+                <input type="text" th:field="*{releaseDate}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}" class="error">Release Date error</div>
+                <br><br>
+            </div>
+            <div>
+                <label>Price:&nbsp;</label>
+                <input type="number" step="0.1" min="1" th:field="*{price}" required/>
+                <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error">Price error</div>
+                <br><br>
+            </div>
+
+            <div>
+                <label>File:&nbsp;</label>
+                <input type="file" name="file"/>
+                <br><br>
+            </div>
+
+            <div>
+                <input type="submit" value="Add">
+                <br><br>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Category</title>
+    <style>
+        .order{
+            margin-left: 30px;
+        }
+        *, *:before, *:after{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+        nav{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 3px 10px -2px rgba(0,0,0,.1);
+            border: 1px solid rgba(0,0,0,.1);
+            z-index:1000;
+        }
+        nav ul{
+            list-style: none;
+            position: relative;
+            float: right;
+            margin-right: 100px;
+            display: inline-table;
+        }
+        nav ul li{
+            float: left;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        nav ul li:hover{background: rgba(0,0,0,.15);}
+        nav ul li:hover > ul{display: block;}
+        nav ul li{
+            float: left;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        nav ul li a{
+            display: block;
+            padding: 30px 20px;
+            color: #222;
+            font-size: .9em;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        nav ul ul{
+            display: none;
+            background: #fff;
+            position: absolute;
+            top: 100%;
+            box-shadow: -3px 3px 10px -2px rgba(0,0,0,.1);
+            border: 1px solid rgba(0,0,0,.1);
+        }
+        nav ul ul li{float: none; position: relative;}
+        nav ul ul li a {
+            padding: 1px 1px;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+        nav ul ul ul {
+            position: absolute;
+            left: 100%;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <nav role='navigation'>
+        <a href="/"><img src="https://clck.ru/UjCoc" width="90" height="75" alt="Book logo"></a>
+        <ul>
+            <li><a href="/reg">Reg</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a>Categories</a>
+                <ul>
+                    <li>
+                        <a th:each="category : ${categories}">
+                            <a th:href="@{/category/{id}(id=${category.getId()})}" id="category">
+                                <small th:text="${category.getName()}"></small>
+                            </a>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="/cart">Cart</a></li>
+        </ul>
+    </nav>
+</div>
+<br><br><br><br><br>
+<div class="card-columns">
+    <div class="order" th:each="book : ${books}">
+
+        <div class="card my-3" align="center">
+            <div class="card-body">
+                <img th:src="@{/img/{image}(image = ${book.getImage()})}" alt="Book image" id="image" width="100" height="150">
+                <h5 class="card-title">
+                    <label for="title"> Title: </label>
+                    <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getTitle()}" id="title">Book</a>
+                    <br>
+                </h5>
+                <p class="card-text">
+                    <label for="author"> Author: </label>
+                    <strong th:text="${book.getAuthor()}" id="author"></strong>
+                    <br>
+
+                    <label for="rating"> Rating: </label>
+                    <strong th:text="${book.getRating()}" id="rating"></strong>
+                    <br>
+
+                    <label for="price"> Price: </label>
+                    <strong th:text="${book.getPrice()}" id="price"></strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div th:if="${totalPages > 1}">
+    <div class="row col-sm-10">
+        <div class="col-sm-2">
+            Total Books: [[${totalBooks}]]
+        </div>
+        <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/category/' + ${category_id} + '/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+            </span>
+        </div>
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/category/' + ${category_id} + '/page/' + ${currentPage + 1}}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+        </div>
+
+        <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/category/' + ${category_id} + '/page/' + ${totalPages}}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+    </div>
+</div>
+<br><br>
+</body>
+</html>
